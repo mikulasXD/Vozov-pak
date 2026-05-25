@@ -150,7 +150,6 @@ def kontrola_spz():
 
 @app.route('/api/vozidla', methods=['GET'])
 def api_vozidla():
-    """Vrátí všechna vozidla jako JSON"""
     vozidla = Vozidlo.query.all()
     return jsonify([{
         'id': v.id,
