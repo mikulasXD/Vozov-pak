@@ -1,0 +1,56 @@
+
+{% extends "layout.html" %}
+
+{% block title %}Statistiky{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">📊 Statistiky vozového parku</h1>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3>Celkový počet vozidel</h3>
+                <h1 class="display-1">{{ celkem }}</h1>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3>Do 100 000 km</h3>
+                <h1 class="display-1">{{ do_100k }}</h1>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card bg-warning">
+            <div class="card-body text-center">
+                <h3>Nad 100 000 km</h3>
+                <h1 class="display-1">{{ nad_100k }}</h1>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h3>Podle paliva</h3>
+                <ul class="list-unstyled">
+                    {% for palivo, pocet in pocty_paliv.items() %}
+                    <li><strong>{{ palivo }}:</strong> {{ pocet }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a href="{{ url_for('seznam') }}" class="btn btn-primary">Zobrazit seznam</a>
+    <a href="{{ url_for('pridat') }}" class="btn btn-success">Přidat vozidlo</a>
+</div>
+{% endblock %}  
+

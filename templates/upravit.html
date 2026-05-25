@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+
+{% block title %}Upravit vozidlo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-warning">
+                <h3 class="mb-0"><i class="fas fa-edit"></i> Upravit vozidlo: {{ vozidlo.vyrobce }} {{ vozidlo.model }}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="upravitForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="vyrobce" class="form-label">Výrobce *</label>
+                            <input type="text" class="form-control" id="vyrobce" name="vyrobce" 
+                                   value="{{ vozidlo.vyrobce }}" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="model" class="form-label">Model *</label>
+                            <input type="text" class="form-control" id="model" name="model" 
+                                   value="{{ vozidlo.model }}" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="rok_vyroby" class="form-label">Rok výroby *</label>
+                            <input type="number" class="form-control" id="rok_vyroby" name="rok_vyroby" 
+                                   value="{{ vozidlo.rok_vyroby }}" min="1900" max="2025" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="stav_tachometru" class="form-label">Stav tachometru (km) *</label>
+                            <input type="number" class="form-control" id="stav_tachometru" name="stav_tachometru" 
+                                   value="{{ vozidlo.stav_tachometru }}" min="0" required>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="palivo" class="form-label">Palivo *</label>
+                            <select class="form-select" id="palivo" name="palivo" required>
+                                <option value="">Vyberte...</option>
+                                {% for palivo in paliva %}
+                                <option value="{{ palivo }}" {% if vozidlo.palivo == palivo %}selected{% endif %}>
+                                    {{ palivo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="karoserie" class="form-label">Karoserie *</label>
+                            <select class="form-select" id="karoserie" name="karoserie" required>
+                                <option value="">Vyberte...</option>
+                                {% for k in karoserie %}
+                                <option value="{{ k }}" {% if vozidlo.karoserie == k %}selected{% endif %}>
+                                    {{ k }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="spz" class="form-label">SPZ *</label>
+                            <input type="text" class="form-control" id="spz" name="spz" 
+                                   value="{{ vozidlo.spz }}" required>
+                            <div id="spzFeedback" class="invalid-feedback"></div>
+                            <small class="text-muted">Zadejte SPZ bez mezer nebo s mezerami</small>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="stav" class="form-label">Stav *</label>
+                            <select class="form-select" id="stav" name="stav" required>
+                                <option value="">Vyberte...</option>
+                                {% for s in stavy %}
+                                <option value="{{ s }}" {% if vozidlo.stav == s %}selected{% endif %}>
+                                    {{ s }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="v_bazaru_od" class="form-label">V bazaru od *</label>
+                            <input type="date" class="form-control" id="v_bazaru_od" name="v_bazaru_od" 
+                                   value="{{ vozidlo.v_bazaru_od.strftime('%Y-%m-%d') if vozidlo.v_bazaru_od else '' }}" required>
+                        </div>
+                        
+                        <div class="col-12 mb-3">
+                            <label for="poznamka" class="form-label">Poznámka</label>
+                            <textarea class="form-control" id="poznamka" name="poznamka" rows="3">{{ vozidlo.poznamka or '' }}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save"></i> Uložit změny
+                        </button>
+                        <a href="{{ url_for('detail', id=vozidlo.id) }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Zrušit
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    var vozidloId = "{{ vozidlo.id }}";
+
+    $('#spz').on('blur', function() {
+        var spz = $(this).val().toUpperCase();
+        if (spz.length > 0) {
+            $.ajax({
+                url: '/ajax/kontrola-spz',
+                data: {
+                    spz: spz,
+                    id: vozidloId
+                },
+                success: function(data) {
+                    if (data.exists) {
+                        $('#spz').addClass('is-invalid');
+                        $('#spzFeedback').text('Tato SPZ již existuje!');
+                        $('button[type="submit"]').prop('disabled', true);
+                    } else {
+                        $('#spz').removeClass('is-invalid');
+                        $('#spzFeedback').text('');
+                        $('button[type="submit"]').prop('disabled', false);
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

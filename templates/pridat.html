@@ -1,0 +1,110 @@
+
+{% extends "layout.html" %}
+
+{% block title %}Přidat vozidlo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0"><i class="fas fa-plus"></i> Přidat nové vozidlo</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="pridatForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="vyrobce" class="form-label">Výrobce *</label>
+                            <input type="text" class="form-control" id="vyrobce" name="vyrobce" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="model" class="form-label">Model *</label>
+                            <input type="text" class="form-control" id="model" name="model" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="rok_vyroby" class="form-label">Rok výroby *</label>
+                            <input type="number" class="form-control" id="rok_vyroby" name="rok_vyroby" 
+                                   min="1900" max="2025" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="stav_tachometru" class="form-label">Stav tachometru (km) *</label>
+                            <input type="number" class="form-control" id="stav_tachometru" name="stav_tachometru" 
+                                   min="0" required>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="palivo" class="form-label">Palivo *</label>
+                            <select class="form-select" id="palivo" name="palivo" required>
+                                <option value="">Vyberte...</option>
+                                {% for palivo in paliva %}
+                                <option value="{{ palivo }}">{{ palivo }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="karoserie" class="form-label">Karoserie *</label>
+                            <select class="form-select" id="karoserie" name="karoserie" required>
+                                <option value="">Vyberte...</option>
+                                {% for k in karoserie %}
+                                <option value="{{ k }}">{{ k }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="spz" class="form-label">SPZ *</label>
+                            <input type="text" class="form-control" id="spz" name="spz" 
+                                   placeholder="např. 1A2 3456" required>
+                            <div id="spzFeedback" class="invalid-feedback"></div>
+                            <small class="text-muted">Zadejte SPZ bez mezer nebo s mezerami</small>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="stav" class="form-label">Stav *</label>
+                            <select class="form-select" id="stav" name="stav" required>
+                                <option value="">Vyberte...</option>
+                                {% for s in stavy %}
+                                <option value="{{ s }}">{{ s }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="v_bazaru_od" class="form-label">V bazaru od *</label>
+                            <input type="date" class="form-control" id="v_bazaru_od" name="v_bazaru_od" 
+                                   value="{{ now().date() if now else '' }}" required>
+                        </div>
+                        
+                        <div class="col-12 mb-3">
+                            <label for="poznamka" class="form-label">Poznámka</label>
+                            <textarea class="form-control" id="poznamka" name="poznamka" rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Uložit vozidlo
+                        </button>
+                        <a href="{{ url_for('seznam') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Zrušit
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Helper pro current date
+function now() {
+    return new Date().toISOString().split('T')[0];
+}
+</script>
+{% endblock %}

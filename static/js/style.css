@@ -1,0 +1,32 @@
+
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+footer {
+    margin-top: auto;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}

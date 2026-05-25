@@ -1,0 +1,51 @@
+
+{% extends "layout.html" %}
+
+{% block title %}Úvod{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0"><i class="fas fa-car"></i> Vítejte v aplikaci Vozový park autobazaru</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <img src="https://cdn.prod.website-files.com/62b597f0d71655c07d4e7b3a/62c2b541ad95366451ea778c_Pinya%20HR%20Logo.svg" alt="Banner" class="img-fluid rounded">
+                </div>
+                
+                <h3>O aplikaci</h3>
+                <p>Tato aplikace slouží pro správu vozového parku autobazaru. Umožňuje:</p>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Prohlížení seznamu všech vozidel</li>
+                    <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Přidávání nových vozidel do databáze</li>
+                    <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Editaci existujících vozidel</li>
+                    <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Mazání vozidel ze seznamu</li>
+                    <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Zobrazení detailních informací o vozidle</li>
+                    <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Statistiky a přehledy o vozovém parku</li>
+                </ul>
+
+                <h3>O autobazaru PINYA</h3>
+                <p>Společnost <strong>PINYA s.r.o.</strong> je rodinný autobazar s dlouholetou tradicí od roku 2010. 
+                   Specializujeme se na prodej kvalitních ojetých vozidel s prověřenou historií. 
+                   Všechna naše vozidla procházejí důkladnou technickou kontrolou a jsme připraveni 
+                   vám nabídnout záruční servis.</p>
+                
+                <p><strong>Majitel: Martin Hortvík</strong> - vášnivý automobilový nadšenec s 15 lety zkušeností 
+                   v automobilovém průmyslu. Osobně garantuje, že každé vozidlo projde důkladnou kontrolou 
+                   před zařazením do nabídky.</p>
+
+                <div class="alert alert-info mt-4">
+                    <i class="fas fa-info-circle"></i> <strong>Proč si vybrat nás?</strong><br>
+                    ✓ Prověřená vozidla bez skrytých závad<br>
+                    ✓ Možnost testovací jízdy<br>
+                    ✓ Zprostředkování financování<br>
+                    ✓ Výkup vozidel za férových podmínek<br>
+                    ✓ Servis a údržba v našem autorizovaném servisu
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
